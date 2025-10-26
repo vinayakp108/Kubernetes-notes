@@ -56,6 +56,15 @@ openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -CAcreateserial -ou
 
 
 <h2>3. ETCD Certificates<br></h2>
+Mutual TLS (mTLS) काय देते?<br>
+Server प्रमाणित करतो client<br>
+Client प्रमाणित करतो server<br>
+दोन्ही बाजू एकमेकांच्या identity verify करतात. <br>
+Network मधून येणारी सगळी data encrypt होते<br>
+Phishing / Man-in-the-middle attack रोखतो<br>
+म्हणजे एकच certificate वापरून client आणि server दोघांचं verify करणं शक्य नाही, त्यासाठी दोन्ही बाजूंना वेगवेगळे certificates लागतात.<br>
+Production cluster मध्ये etcd, kube-apiserver, kubelet, admin clients साठी mTLS setup करणे best practice आहे.<br>
+<br>
 Explanation:-<br>
 etcd server आणि client certificates generate करा.<br>
 API server etcd शी communicate करताना client certificate वापरेल.<br><br>
@@ -114,8 +123,7 @@ openssl req -new -key kube-proxy.key -subj "/CN=system:kube-proxy" -out kube-pro
 openssl x509 -req -in kube-proxy.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out kube-proxy.crt -days 365
 ```
 <br>
-
-<h2>6. Certificate Placement & Configuration</h2><br>
+<h2>6. Certificate Placement & Configuration<br></h2>
 Explanation:-<br>
 Master node: API server + CA + etcd client certificates<br>
 Worker nodes: Kubelet certificates<br>
@@ -141,7 +149,7 @@ cp ca.crt admin.crt admin.key ~/.kube/
 ```
 <br>
 
-<h2>7. Verification</h2><br>
+<h2>7. Verification<br></h2>
 Explanation:-<br>
 सर्व server आणि client certificates verify करा.<br>
 Unauthorized / expired certificates deny करा.<br><br>
