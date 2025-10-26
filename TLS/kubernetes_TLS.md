@@ -3,9 +3,9 @@
 
 <h2>1. Root Certificate Authority (CA)<br></h2>
 Explanation:-<br>
-Master node वर root CA तयार करा.<br>
-Root CA server certificate + private key सुरक्षित ठेवा.<br>
-सर्व cluster certificates साठी signing authority म्हणून वापरली जाईल.<br><br>
+&bull; Master node वर root CA तयार करा.<br>
+&bull; Root CA server certificate + private key सुरक्षित ठेवा.<br>
+&bull; सर्व cluster certificates साठी signing authority म्हणून वापरली जाईल.<br><br>
 
 ```
 # Master node वर root CA तयार करा
@@ -16,9 +16,9 @@ openssl req -x509 -new -nodes -key ca.key -subj "/CN=kubernetes-ca" -days 3650 -
 
 <h2>2. API Server Certificates<br></h2>
 Explanation:-<br>
-API server साठी server certificate आणि key तयार करा.<br>
-Alternate DNS/IP names include करणे mandatory आहे.<br>
-Signed by Root CA.<br><br>
+&bull; API server साठी server certificate आणि key तयार करा.<br>
+&bull; Alternate DNS/IP names include करणे mandatory आहे.<br>
+&bull; Signed by Root CA.<br><br>
 
 ```
 # OpenSSL configuration file तयार करा (openssl.cnf)
@@ -57,17 +57,17 @@ openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -CAcreateserial -ou
 
 <h2>3. ETCD Certificates<br></h2>
 Mutual TLS (mTLS) काय देते?<br>
-Server प्रमाणित करतो client<br>
-Client प्रमाणित करतो server<br>
-दोन्ही बाजू एकमेकांच्या identity verify करतात. <br>
-Network मधून येणारी सगळी data encrypt होते<br>
-Phishing / Man-in-the-middle attack रोखतो<br>
+&bull; Server प्रमाणित करतो client<br>
+&bull; Client प्रमाणित करतो server<br>
+&bull; दोन्ही बाजू एकमेकांच्या identity verify करतात. <br>
+&bull; Network मधून येणारी सगळी data encrypt होते<br>
+&bull; Phishing / Man-in-the-middle attack रोखतो<br>
 म्हणजे एकच certificate वापरून client आणि server दोघांचं verify करणं शक्य नाही, त्यासाठी दोन्ही बाजूंना वेगवेगळे certificates लागतात.<br>
 Production cluster मध्ये etcd, kube-apiserver, kubelet, admin clients साठी mTLS setup करणे best practice आहे.<br>
 <br>
 Explanation:-<br>
-etcd server आणि client certificates generate करा.<br>
-API server etcd शी communicate करताना client certificate वापरेल.<br><br>
+&bull; etcd server आणि client certificates generate करा.<br>
+&bull; API server etcd शी communicate करताना client certificate वापरेल.<br><br>
 
 ```
 # etcd server key & CSR
@@ -88,8 +88,8 @@ openssl x509 -req -in etcd-client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -
 
 <h2>4. Kubelet Certificates<br></h2>
 Explanation:-<br>
-Each worker node kubelet साठी key + certificate generate करा.<br>
-API server kubelet verify करण्यासाठी client certificate वापरेल.<br><br>
+&bull; Each worker node kubelet साठी key + certificate generate करा.<br>
+&bull; API server kubelet verify करण्यासाठी client certificate वापरेल.<br><br>
 
 ```
 # Kubelet key & CSR
@@ -103,8 +103,8 @@ openssl x509 -req -in kubelet.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out 
 
 <h2>5. Admin / Scheduler / Kube-proxy Certificates<br></h2>
 Explanation:-<br>
-Admin, Scheduler, Kube-proxy client certificates generate करा.<br>
-API server authenticate करण्यासाठी certificates वापरतील.<br><br>
+&bull; Admin, Scheduler, Kube-proxy client certificates generate करा.<br>
+&bull; API server authenticate करण्यासाठी certificates वापरतील.<br><br>
 
 ```
 # Admin key & CSR
@@ -125,10 +125,10 @@ openssl x509 -req -in kube-proxy.csr -CA ca.crt -CAkey ca.key -CAcreateserial -o
 <br>
 <h2>6. Certificate Placement & Configuration<br></h2>
 Explanation:-<br>
-Master node: API server + CA + etcd client certificates<br>
-Worker nodes: Kubelet certificates<br>
-Admin client: admin.crt + admin.key<br>
-Scheduler/Kube-proxy: client certificates<br>
+&bull; Master node: API server + CA + etcd client certificates<br>
+&bull; Worker nodes: Kubelet certificates<br>
+&bull; Admin client: admin.crt + admin.key<br>
+&bull; Scheduler/Kube-proxy: client certificates<br>
 Mandatory: CA certificate (ca.crt) सर्व nodes/clients वर copy करा.<br><br>
 
 ```
@@ -151,8 +151,8 @@ cp ca.crt admin.crt admin.key ~/.kube/
 
 <h2>7. Verification<br></h2>
 Explanation:-<br>
-सर्व server आणि client certificates verify करा.<br>
-Unauthorized / expired certificates deny करा.<br><br>
+&bull; सर्व server आणि client certificates verify करा.<br>
+&bull; Unauthorized / expired certificates deny करा.<br><br>
 
 ```
 # Verify certificate
