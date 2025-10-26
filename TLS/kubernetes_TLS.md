@@ -57,11 +57,11 @@ openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -CAcreateserial -ou
 
 <h2>3. ETCD Certificates<br></h2>
 Mutual TLS (mTLS) काय देते?<br>
-&bull; Server प्रमाणित करतो client<br>
-&bull; Client प्रमाणित करतो server<br>
-&bull; दोन्ही बाजू एकमेकांच्या identity verify करतात. <br>
-&bull; Network मधून येणारी सगळी data encrypt होते<br>
-&bull; Phishing / Man-in-the-middle attack रोखतो<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Server प्रमाणित करतो client<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Client प्रमाणित करतो server<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; दोन्ही बाजू एकमेकांच्या identity verify करतात. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Network मधून येणारी सगळी data encrypt होते<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Phishing / Man-in-the-middle attack रोखतो<br><br>
 म्हणजे एकच certificate वापरून client आणि server दोघांचं verify करणं शक्य नाही, त्यासाठी दोन्ही बाजूंना वेगवेगळे certificates लागतात.<br>
 Production cluster मध्ये etcd, kube-apiserver, kubelet, admin clients साठी mTLS setup करणे best practice आहे.<br>
 <br>
@@ -164,14 +164,14 @@ openssl verify -CAfile ca.crt kubelet.crt
 
 </h2>💡 Scenario Example (Production-ready)<br></h2>
 
-Master node: API server serving certificate + CA + etcd client<br>
+&bull; Master node: API server serving certificate + CA + etcd client<br>
 
-Worker nodes: Kubelet certificates<br>
+&bull; Worker nodes: Kubelet certificates<br>
 
-Users: Admin certificate for kubectl access<br>
+&bull; Users: Admin certificate for kubectl access<br>
 
-Components: Scheduler/Kube-proxy client certificates<br>
+&bull; Components: Scheduler/Kube-proxy client certificates<br>
 
-Verification: openssl verify command with CA certificate<br>
+&bull; Verification: openssl verify command with CA certificate<br>
 
 
