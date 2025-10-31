@@ -174,4 +174,7 @@ openssl verify -CAfile ca.crt kubelet.crt
 
 &bull; Verification: openssl verify command with CA certificate<br>
 
+<img width="400" height="600" alt="image-kube-cert" src="https://github.com/user-attachments/assets/efe83df7-2f46-4942-9ae9-30c765f3d0ff" />
+
+
 
