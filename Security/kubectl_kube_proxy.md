@@ -1,4 +1,4 @@
-<h3>kubectl proxy म्हणजे काय आणि आपण का वापरतो Kubernetes मध्ये 👇</h3><br>
+<h3>🔹kubectl proxy म्हणजे काय आणि आपण का वापरतो Kubernetes मध्ये 👇</h3><br>
 
 <h4>🔹 kubectl proxy म्हणजे काय?</h4>
 
@@ -45,6 +45,10 @@ kubectl proxy
 curl http://127.0.0.1:8001/api/v1/namespaces/default/pods
 ```
 <h4>🔹 Proxy तुझ्या credentials वापरून API server शी authenticated request पाठवतो आणि तुला pods ची यादी परत मिळते.</h4>
+
+<h3> 🔹 Two terms kube proxy and kubectl proxy they are not the same.</h3>
+
+<h4>🔹kube proxy is used to enable connectivity between pods and services across different nodes in the cluster.</h4>
 
 
 
